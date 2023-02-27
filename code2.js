@@ -41,7 +41,9 @@ class ProductManager {
     if (indexProduct == -1) {
       return "--> Product not found";
     } else {
-      const actualProduct = { ...products[indexProduct] };
+      const actualProduct = { ...products[indexProduct], ...obj };
+      products.splice(indexProduct, 1, actualProduct);
+      await fs.promises.writeFile(this.path, JSON.stringify(products));
     }
   };
 
@@ -115,7 +117,7 @@ const run = async () => {
   //console.log(await product.getProductsById(6));
   //console.log(await product.deleteProducts());
   //console.log(await product.deleteProductsById(2));
-  await product.updateProduct(3, 4);
+  //await product.updateProduct(10, { stock: 100 });
 };
 
 run();
